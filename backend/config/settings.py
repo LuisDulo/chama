@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "rules",
     "finance",
     "payments",
+    "reports",
 ]
 
 MIDDLEWARE = [
@@ -89,6 +90,8 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
     "DEFAULT_THROTTLE_RATES": {"login": "10/min", "password_reset": "5/hour"},
     "UNAUTHENTICATED_USER": None,
+    # ?format= chooses a statement file type here, not a DRF renderer.
+    "URL_FORMAT_OVERRIDE": None,
 }
 
 SIMPLE_JWT = {
