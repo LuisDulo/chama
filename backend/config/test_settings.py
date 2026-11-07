@@ -29,3 +29,4 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {"login": "1000/min", "password_reset": "1000/min"},
 }
 EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
+MPESA = {**MPESA, "CONSUMER_KEY": "", "CALLBACK_SECRET": "test-callback-secret"}  # noqa: F405
