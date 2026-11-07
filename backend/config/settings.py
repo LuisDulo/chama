@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "audit",
     "chamas",
     "rules",
+    "finance",
 ]
 
 MIDDLEWARE = [

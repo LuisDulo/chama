@@ -16,6 +16,7 @@ def create_chama(user, data, rules=None) -> Chama:
     given starts from the platform defaults, and every value can be changed later by a vote
     of the chama's own approvers.
     """
+    from finance.ledger import install_accounts
     from rules.services import install_defaults
 
     chama = Chama.objects.create(created_by=user, **data)
@@ -28,6 +29,7 @@ def create_chama(user, data, rules=None) -> Chama:
     membership.activate(user)
     membership.save()
     install_defaults(chama, user, rules)
+    install_accounts(chama)
     record(user, "chama.created", chama, chama=chama, name=chama.name)
     return chama
 
