@@ -40,10 +40,14 @@ class MembershipSerializer(serializers.ModelSerializer):
     role = serializers.CharField(source="role.role_name")
     role_id = serializers.IntegerField(source="role.id")
     phone_number = serializers.SerializerMethodField()
+    is_me = serializers.SerializerMethodField()
 
     class Meta:
         model = ChamaMembership
-        fields = ["id", "name", "phone_number", "role", "role_id", "status", "joined_at"]
+        fields = ["id", "name", "phone_number", "role", "role_id", "status", "joined_at", "is_me"]
+
+    def get_is_me(self, membership):
+        return membership.user_id == getattr(self.context.get("user"), "pk", None)
 
     def get_phone_number(self, membership):
         # Contact details are shown only to people who manage membership.
