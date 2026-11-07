@@ -1,0 +1,6 @@
+-r requirements.txt
+pgserver==0.1.4
+pytest==9.2.0
+pytest-django==4.14.0
+responses==0.26.3
+ruff==0.17.4
