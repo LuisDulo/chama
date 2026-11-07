@@ -132,7 +132,7 @@ class Contribution(AppendOnly):
     amount = models.DecimalField(**MONEY)
     currency = models.CharField(max_length=3, default="KES")
     method = models.CharField(max_length=10, choices=Method.choices)
-    reference_number = models.CharField(max_length=40)
+    reference_number = models.CharField(max_length=80)
     transaction_date = models.DateField()
     journal_entry = models.OneToOneField(JournalEntry, on_delete=models.PROTECT, related_name="+")
     recorded_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.PROTECT,

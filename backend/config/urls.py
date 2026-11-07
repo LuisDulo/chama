@@ -5,4 +5,5 @@ urlpatterns = [
     path("api/", include("chamas.urls")),
     path("api/", include("rules.urls")),
     path("api/", include("finance.urls")),
+    path("api/", include("payments.urls")),
 ]

@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "chamas",
     "rules",
     "finance",
+    "payments",
 ]
 
 MIDDLEWARE = [
@@ -116,3 +117,16 @@ LOGGING = {
     "handlers": {"console": {"class": "logging.StreamHandler"}},
     "root": {"handlers": ["console"], "level": "INFO"},
 }
+
+# M-Pesa Daraja. With no consumer key, payments are simulated.
+MPESA = {
+    "BASE_URL": os.environ.get("MPESA_BASE_URL", "https://sandbox.safaricom.co.ke"),
+    "CONSUMER_KEY": os.environ.get("MPESA_CONSUMER_KEY", ""),
+    "CONSUMER_SECRET": os.environ.get("MPESA_CONSUMER_SECRET", ""),
+    "SHORTCODE": os.environ.get("MPESA_SHORTCODE", "174379"),
+    "PASSKEY": os.environ.get("MPESA_PASSKEY", ""),
+    "CALLBACK_BASE_URL": os.environ.get("MPESA_CALLBACK_BASE_URL", "http://localhost:8000"),
+    "CALLBACK_SECRET": os.environ.get("MPESA_CALLBACK_SECRET", ""),
+}
+if MPESA["CONSUMER_KEY"] and len(MPESA["CALLBACK_SECRET"]) < 24:
+    raise RuntimeError("Set MPESA_CALLBACK_SECRET to a long random value")
