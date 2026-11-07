@@ -101,8 +101,8 @@ class MemberListView(APIView):
             members = members.exclude(status=ChamaMembership.Status.REJECTED)
         else:
             members = members.filter(status=ChamaMembership.Status.ACTIVE)
-        return Response(MembershipSerializer(members, many=True,
-                                             context={"show_contacts": can_manage}).data)
+        return Response(MembershipSerializer(
+            members, many=True, context={"show_contacts": can_manage, "user": request.user}).data)
 
 
 def target_membership(actor_membership, membership_id):
