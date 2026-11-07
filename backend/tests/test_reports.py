@@ -82,6 +82,7 @@ def test_names_cannot_become_spreadsheet_formulas(user):
     record_contribution(attacker, Decimal("1000"), "cash", "=1+1", user)
     xlsx = client_for(user).get(f"/api/chamas/{chama.id}/reports/financial-statements/"
                                 "?format=xlsx")
-    cell = workbook(xlsx)["Members"].cell(5, 1)
+    # Row order depends on the database's collation, so find the row by its content.
+    names = [row[0] for row in workbook(xlsx)["Members"].iter_rows(min_row=5)]
+    cell = next(c for c in names if str(c.value).startswith("=HYPERLINK"))
     assert cell.data_type == "s"
-    assert cell.value.startswith("=HYPERLINK")
