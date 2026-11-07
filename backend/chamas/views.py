@@ -36,7 +36,10 @@ class ChamaListView(APIView):
     def post(self, request):
         serializer = ChamaSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        chama = services.create_chama(request.user, serializer.validated_data)
+        rules = request.data.get("rules") or {}
+        if not isinstance(rules, dict):
+            raise ValidationError({"rules": "Give rule settings by category"})
+        chama = services.create_chama(request.user, serializer.validated_data, rules)
         return Response(ChamaSerializer(chama).data, status=status.HTTP_201_CREATED)
 
 

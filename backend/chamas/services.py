@@ -9,8 +9,15 @@ from chamas.models import Chama, ChamaMembership, ChamaRole
 
 
 @transaction.atomic
-def create_chama(user, data) -> Chama:
-    """Creates the chama, its standard roles, and makes the creator its chairperson."""
+def create_chama(user, data, rules=None) -> Chama:
+    """Creates the chama, its standard roles and first rules, with the creator as chairperson.
+
+    `rules` holds the wizard's financial and membership settings by category. Anything not
+    given starts from the platform defaults, and every value can be changed later by a vote
+    of the chama's own approvers.
+    """
+    from rules.services import install_defaults
+
     chama = Chama.objects.create(created_by=user, **data)
     roles = {
         name: ChamaRole.objects.create(chama=chama, role_name=name, description=description,
@@ -20,6 +27,7 @@ def create_chama(user, data) -> Chama:
     membership = ChamaMembership(chama=chama, user=user, role=roles[permissions.CHAIRPERSON])
     membership.activate(user)
     membership.save()
+    install_defaults(chama, user, rules)
     record(user, "chama.created", chama, chama=chama, name=chama.name)
     return chama
 
