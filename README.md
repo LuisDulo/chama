@@ -4,6 +4,10 @@ A platform for running chamas (savings groups, investment clubs and merry-go-rou
 
 Built with Django REST Framework, PostgreSQL and React. This is the first release from the [requirements specification](#scope): the twelve acceptance criteria in its section 13.
 
+![The overview of a chama, showing the member's savings and the group's books](docs/screenshots/05-overview-treasurer.png)
+
+**Screenshots:** every page, from both a treasurer's and a chairperson's side, are in [docs/SCREENSHOTS.md](docs/SCREENSHOTS.md) (also as a [Word document](docs/CHAMA_Screenshots.docx)).
+
 ## Try it locally
 
 You need Python 3.12, Node.js 20+ and PostgreSQL.
